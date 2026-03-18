@@ -1,10 +1,16 @@
 USE pizza_runner;
 
 -- A. Pizza Metrics
+SELECT *
+FROM customer_orders
 
 -- 1. How many pizzas were ordered?
+SELECT COUNT(pizza_id) as pizza_order_count
+FROM customer_orders;
 
 -- 2. How many unique customer orders were made?
+SELECT COUNT(DISTINCT order_id) AS order_count
+FROM customer_orders;
 
 -- 3. How many successful orders were delivered by each runner?
 
