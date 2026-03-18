@@ -1,12 +1,29 @@
 USE foodie_fi;
 
+SELECT *
+FROM plans;
+SELECT *
+FROM subscriptions;
+
 -- B. Data Analysis Questions
 
 -- 1. How many customers has Foodie-Fi ever had?
+SELECT COUNT (DISTINCT customer_id) as total_cust
+FROM subscriptions;
 
 -- 2. What is the monthly distribution of trial plan start_date values for our dataset - use the start of the month as the group by value?
 
 -- 3. What plan start_date values occur after the year 2020 for our dataset? Show the breakdown by count of events for each plan_name.
+SELECT
+    p.plan_id,
+    p.plan_name,
+    COUNT(s.plan_id) AS total_event
+FROM subscriptions s
+INNER JOIN plans p
+    ON s.plan_id = p.plan_id
+WHERE start_date >= '2021-01-01'
+GROUP BY p.plan_id, p.plan_name
+ORDER BY p.plan_id;
 
 -- 4. What is the customer count and percentage of customers who have churned rounded to 1 decimal place?
 
@@ -17,6 +34,10 @@ USE foodie_fi;
 -- 7. What is the customer count and percentage breakdown of all 5 plan_name values at 2020-12-31?
 
 -- 8. How many customers have upgraded to an annual plan in 2020?
+SELECT COUNT(customer_id) AS annual_cust
+FROM subscriptions
+WHERE start_date <= '2020-12-31'
+    AND plan_id = 3;
 
 -- 9. How many days on average does it take for a customer to an annual plan from the day they join Foodie-Fi?
 
