@@ -3,6 +3,12 @@ USE pizza_runner;
 -- B. Runner and Customer Experience
 
 -- 1. How many runners signed up for each 1 week period? (i.e. week starts 2021-01-01)
+SELECT
+  FLOOR(DATEDIFF(registration_date, '2021-01-01') / 7) + 1 AS week_number,
+  COUNT(*) AS runner_count
+FROM runners
+GROUP BY week_number
+ORDER BY week_number;
 
 -- 2. What was the average time in minutes it took for each runner to arrive at the Pizza Runner HQ to pickup the order?
 SELECT
