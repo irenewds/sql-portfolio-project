@@ -151,13 +151,7 @@ FROM dates
 WHERE annual_date IS NOT NULL;
 
 -- 10. Can you further breakdown this average value into 30 day periods (i.e. 0-30 days, 31-60 days etc)
-SELECT 
-    CONCAT(
-        FLOOR(days_to_annual / 30) * 30, '-', 
-        FLOOR(days_to_annual / 30) * 30 + 30
-    ) AS day_range,
-    COUNT(*) AS customer_count
-FROM (
+WITH base AS (
     SELECT 
         DATEDIFF(
             MIN(CASE WHEN p.plan_name = 'pro annual' THEN s.start_date END),
@@ -168,9 +162,17 @@ FROM (
         ON s.plan_id = p.plan_id
     GROUP BY s.customer_id
     HAVING days_to_annual IS NOT NULL
+)
+
+SELECT 
+    CONCAT(bucket * 30, '-', bucket * 30 + 30, ' days') AS day_range,
+    COUNT(*) AS customer_count
+FROM (
+    SELECT FLOOR(days_to_annual / 30) AS bucket
+    FROM base
 ) t
-GROUP BY FLOOR(days_to_annual / 30)
-ORDER BY FLOOR(days_to_annual / 30);
+GROUP BY bucket
+ORDER BY bucket;
 
 -- 11. How many customers downgraded from a pro monthly to a basic monthly plan in 2020?
 WITH ordered AS (
