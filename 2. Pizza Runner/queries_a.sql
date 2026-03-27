@@ -21,7 +21,7 @@ GROUP BY runner_id;
 -- 4. How many of each type of pizza was delivered?
 SELECT 
     p.pizza_name,
-    COUNT(r.order_id)
+    COUNT(r.order_id) AS pizza_count
 FROM runner_orders r
 INNER JOIN customer_orders c
     ON r.order_id = c.order_id
