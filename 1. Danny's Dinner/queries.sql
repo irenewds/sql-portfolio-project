@@ -121,7 +121,7 @@ WHERE ranked = 1;
 SELECT
     sales.customer_id,
     COUNT(sales.product_id) AS total_items,
-    SUM(menu.price)
+    SUM(menu.price) AS amount_spent
 FROM sales
 INNER JOIN menu
     ON sales.product_id = menu.product_id
