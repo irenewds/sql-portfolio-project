@@ -66,7 +66,7 @@ VALUES
 SELECT *
 FROM page_hierarchy;
 
--- Table 4: Users
+-- Table 4: Users 
 CREATE TABLE users (
   user_id INTEGER,
   cookie_id VARCHAR(6),
